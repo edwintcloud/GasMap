@@ -9,5 +9,5 @@
 
 ## Other Considerations
 1. SEO metadata
-2. <header> and <nav> tags should be used with the main content residing in <main> tag
+2. `<header>` and `<nav>` tags should be used with the main content residing in `<main>` tag
 3. Setup for deployment on now.sh
