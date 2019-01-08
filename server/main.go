@@ -17,6 +17,6 @@ func main() {
 	})
 
 	// Start http server, wrap with fatal helper func
-	e.Logger.Fatal(e.Start(":5000"))
+	e.Logger.Fatal(e.Start(":9000"))
 
 }
