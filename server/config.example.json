@@ -1,0 +1,15 @@
+{
+  "server": {
+    "address": ":9000"
+  },
+  "database": {
+    "url": "localhost",
+    "name": "gasmap",
+    "username": "",
+    "password": ""
+  },
+  "google": {
+    "oauth_id": "blahblah.apps.googleusercontent.com",
+    "oauth_secret": "supersecret"
+  }
+}
