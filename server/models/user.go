@@ -11,14 +11,14 @@ import (
 
 // User is our user model
 type User struct {
-	ID        bson.ObjectId `json:"_id,omitempty" bson:"_id,omitempty"`
-	Email     string        `json:"email" bson:"email"`
-	Password  string        `json:"password,omitempty" bson:"password"`
-	Token     string        `json:"token,omitempty" bson:"-"`
-	FirstName string        `json:"firstName" bson:"firstName"`
-	LastName  string        `json:"lastName" bson:"lastName"`
-	// []vehicles
-	// []trips
+	ID        bson.ObjectId   `json:"_id,omitempty" bson:"_id,omitempty"`
+	Email     string          `json:"email" bson:"email"`
+	Password  string          `json:"password,omitempty" bson:"password,omitempty"`
+	Token     string          `json:"token,omitempty" bson:"-"`
+	FirstName string          `json:"firstName" bson:"firstName"`
+	LastName  string          `json:"lastName" bson:"lastName"`
+	Vehicles  []bson.ObjectId `json:"vehicles,omitempty" bson:"vehicles,omitempty"`
+	Trips     []bson.ObjectId `json:"trips,omitempty" bson:"trips,omitempty"`
 }
 
 // Create is our create method for users
