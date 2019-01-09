@@ -8,6 +8,7 @@ import (
 	"github.com/edwintcloud/GasMap/server/models"
 	"github.com/edwintcloud/GasMap/server/utils"
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 	"github.com/spf13/viper"
 )
 
@@ -36,11 +37,10 @@ func main() {
 	// defer mongo session to close when app closes
 	defer session.Close()
 
-	// Configure oauth
-	utils.ConfigureOauth(viper.GetString("google.oauth_redirect_url"), viper.GetString("google.oauth_id"), viper.GetString("google.oauth_secret"))
-
-	// Set JwtSecret
-	utils.JwtSecret = viper.GetString("google.oauth_secret")
+	// register our middlewares
+	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: "${method}  ${uri}  ${latency_human}  ${status}\n",
+	}))
 
 	// Register controller routes with echo
 	userController := controllers.UserController{E: e}

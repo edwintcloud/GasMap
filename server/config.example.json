@@ -7,10 +7,5 @@
     "name": "gasmap",
     "username": "",
     "password": ""
-  },
-  "google": {
-    "oauth_redirect_url": "http://localhost:9000/api/v1/users/auth/google/callback",
-    "oauth_id": "blahblah.apps.googleusercontent.com",
-    "oauth_secret": "supersecret"
   }
 }

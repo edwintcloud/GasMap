@@ -1,26 +1,25 @@
 import React, { Component } from 'react';
-import logo from '../assets/images/logo.svg';
-import '../assets/css/App.css';
+import { BrowserRouter, Route } from 'react-router-dom';
+import SignIn from './SignIn';
+
+// Routes
+const routes = [
+  {
+    path: "/",
+    component: SignIn
+  }
+];
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <BrowserRouter>
+      <div className="container">
+        {routes.map((route, i) => (
+          <Route key={i} exact path={route.path} component={route.component} />
+        ))}
       </div>
+      </BrowserRouter>
     );
   }
 }
