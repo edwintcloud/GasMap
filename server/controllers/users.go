@@ -22,19 +22,19 @@ func (c *UserController) Register() {
 
 	routes := c.E.Group("/api/v1/users")
 	{
-		routes.GET("", c.Get)
-		routes.GET("/auth/google/login", c.GoogleLogin)
-		routes.GET("/auth/google/callback", c.GoogleCallback)
+		routes.GET("", c.get)
+		routes.GET("/auth/google/login", c.googleLogin)
+		routes.GET("/auth/google/callback", c.googleCallback)
 	}
 }
 
 // Get is our user controller get route
-func (c *UserController) Get(e echo.Context) error {
+func (c *UserController) get(e echo.Context) error {
 	return e.JSON(http.StatusOK, models.ResponseMsg{Message: "Hello"})
 }
 
 // GoogleLogin is our user controller google login route
-func (c *UserController) GoogleLogin(e echo.Context) error {
+func (c *UserController) googleLogin(e echo.Context) error {
 
 	// generate random uuid to prevent csrf attacks
 	state := uuid.NewV4().String()
@@ -47,7 +47,7 @@ func (c *UserController) GoogleLogin(e echo.Context) error {
 }
 
 // GoogleCallback is our user controller google callback route
-func (c *UserController) GoogleCallback(e echo.Context) error {
+func (c *UserController) googleCallback(e echo.Context) error {
 
 	// get code from query params
 	code := e.QueryParam("code")
