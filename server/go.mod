@@ -2,6 +2,7 @@ module github.com/edwintcloud/GasMap/server
 
 require (
 	cloud.google.com/go v0.34.0 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8
 	github.com/google/pprof v0.0.0-20190108002400-985cf9b4fdd2 // indirect
 	github.com/labstack/echo v0.0.0-20181123063703-c7eb8da9ec73

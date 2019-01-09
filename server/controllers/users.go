@@ -80,6 +80,25 @@ func (c *UserController) GoogleCallback(e echo.Context) error {
 		return e.JSON(http.StatusBadRequest, models.ResponseError{Error: err.Error()})
 	}
 
-	// test by returning user info
-	return e.JSON(http.StatusOK, profile)
+	// create user in db
+	user := models.User{
+		FirstName: profile.FirstName,
+		LastName:  profile.LastName,
+		Email:     profile.Email,
+		Password:  code,
+	}
+	err = user.Create()
+	if err != nil {
+		return e.JSON(http.StatusBadRequest, models.ResponseError{Error: err.Error()})
+	}
+
+	// find user in db by email, also generates jwt for Token field
+	// password is set to ""
+	err = user.FindByEmail()
+	if err != nil {
+		return e.JSON(http.StatusBadRequest, models.ResponseError{Error: err.Error()})
+	}
+
+	// return user
+	return e.JSON(http.StatusOK, user)
 }

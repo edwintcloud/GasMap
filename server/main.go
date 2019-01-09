@@ -39,6 +39,9 @@ func main() {
 	// Configure oauth
 	utils.ConfigureOauth(viper.GetString("google.oauth_redirect_url"), viper.GetString("google.oauth_id"), viper.GetString("google.oauth_secret"))
 
+	// Set JwtSecret
+	utils.JwtSecret = viper.GetString("google.oauth_secret")
+
 	// Register controller routes with echo
 	userController := controllers.UserController{E: e}
 	userController.Register()
