@@ -28,15 +28,17 @@ func init() {
 func main() {
 	dbURL := viper.GetString("database.url")
 	dbName := viper.GetString("database.name")
+	port := viper.GetString("server.address")
 
 	// Create new instance of echo
 	e := echo.New()
 
-	// if mongodb_uri is an env var, use that to connect instead
+	// if mongodb_uri is an env var, use that to connect instead, and set our port
 	if v, ok := os.LookupEnv("MONGODB_URI"); ok {
 		dbURL = v
 		database := strings.Split(v, "/")
 		dbName = database[len(database)-1]
+		port = fmt.Sprintf(":%s", os.Getenv("PORT"))
 	}
 
 	// Connect to mongodb or panic
@@ -64,6 +66,7 @@ func main() {
 	})
 
 	// Start http server, wrap with fatal helper func
-	e.Logger.Fatal(e.Start(":9000"))
+
+	e.Logger.Fatal(e.Start(port))
 
 }
