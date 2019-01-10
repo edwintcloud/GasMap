@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
+	"strings"
 
 	"github.com/edwintcloud/GasMap/server/controllers"
 	"github.com/edwintcloud/GasMap/server/models"
@@ -24,12 +26,21 @@ func init() {
 }
 
 func main() {
+	dbURL := viper.GetString("database.url")
+	dbName := viper.GetString("database.name")
 
 	// Create new instance of echo
 	e := echo.New()
 
+	// if mongodb_uri is an env var, use that to connect instead
+	if v, ok := os.LookupEnv("MONGODB_URI"); ok {
+		dbURL = v
+		database := strings.Split(v, "/")
+		dbName = database[len(database)-1]
+	}
+
 	// Connect to mongodb or panic
-	session, err := utils.ConnectToDb(viper.GetString("database.url"), viper.GetString("database.name"))
+	session, err := utils.ConnectToDb(dbURL, dbName)
 	if err != nil {
 		panic(err)
 	}

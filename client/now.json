@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "name": "gas-map",
+  "alias": "gas-map.now.sh",
+  "routes": [
+    { "src": "/api.*", "dest": "https://gas-map.herokuapp.com" }
+  ],
+  "builds": [
+    { "src": "package.json", "use": "@now/static-build", "config": { "distDir": "build" } }
+  ],
+  "env": {
+    "REACT_APP_GOOGLE_OAUTH_CLIENT_ID": "@gasmap-google-oauth_id"
+  }
+}

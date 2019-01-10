@@ -60,5 +60,3 @@ Temporary Items
 .history
 
 # End of https://www.gitignore.io/api/macos,visualstudiocode,go
-server
-config.json
