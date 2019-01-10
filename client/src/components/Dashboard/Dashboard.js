@@ -10,6 +10,10 @@ class Dashboard extends Component {
     window.location = "/";
   };
 
+  vehiclesClick = () => {
+    this.props.history.push("/dashboard/vehicles");
+  }
+
   render() {
     if ("_id" in this.props.user) {
       return (
@@ -21,7 +25,7 @@ class Dashboard extends Component {
           </div>
 
           <div className="two_grid_b">
-            <button className="button lg">My Vehicles</button>
+            <button className="button lg" onClick={this.vehiclesClick}>My Vehicles</button>
             <button className="button lg">My Trips</button>
             <a href="/">Settings</a>
             <a href="/" onClick={this.logoutUserClick}>

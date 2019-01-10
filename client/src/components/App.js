@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import SignIn from './SignIn';
 import Dashboard from './Dashboard/Dashboard';
+import Vehicle from './Dashboard/Vehicle/Vehicle';
 
 // Routes
 const routes = [
@@ -12,6 +13,10 @@ const routes = [
   {
     path: "/dashboard",
     component: Dashboard
+  },
+  {
+    path: "/dashboard/vehicles",
+    component: Vehicle
   }
 ];
 
