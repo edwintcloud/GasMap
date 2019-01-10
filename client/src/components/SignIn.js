@@ -21,6 +21,7 @@ class SignIn extends Component {
 
   signInFailure = error => {
     console.log(error.error);
+    console.log("oh no")
   };
 
   render() {
@@ -28,6 +29,7 @@ class SignIn extends Component {
     if ("_id" in this.props.user) {
       return <Redirect to="/dashboard" />
     }
+
     return (
       <div className="signin_container">
         <h1>Welcome to Gas Map</h1>
@@ -38,6 +40,7 @@ class SignIn extends Component {
             buttonText="Sign in With Google"
             onSuccess={this.signIn}
             onFailure={this.signInFailure}
+            className="button"
           />
         </div>
       </div>

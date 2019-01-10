@@ -59,3 +59,10 @@ export function getUser() {
     }
   };
 }
+
+// delete user from local storage
+export function logoutUser() {
+  return dispatch => {
+    localStorage.removeItem("user");
+  }
+}
