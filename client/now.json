@@ -7,8 +7,5 @@
   ],
   "builds": [
     { "src": "package.json", "use": "@now/static-build", "config": { "distDir": "build" } }
-  ],
-  "env": {
-    "REACT_APP_GOOGLE_OAUTH_CLIENT_ID": "@gasmap-google-oauth_id"
-  }
+  ]
 }
