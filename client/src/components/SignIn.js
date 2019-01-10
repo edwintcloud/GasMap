@@ -1,30 +1,22 @@
 import React, { Component } from "react";
 import GoogleLogin from "react-google-login";
-import axios from "axios";
-import Cookies from "js-cookie";
+import { Redirect } from "react-router-dom";
+import { connect } from "react-redux";
+import { usersSignin, getUser } from "../actions/users";
 
 class SignIn extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      session: ''
-    };
+
+  componentWillMount() {
+    this.props.getUser();
   }
 
   signIn = response => {
-    axios
-      .post("/api/v1/users", {
-        firstName: response.profileObj.givenName,
-        lastName: response.profileObj.familyName,
-        email: response.profileObj.email
-      })
-      .then(res => {
-        Cookies.set('_session', res.data.token, { expires: 365, path: '/' });
-        this.setState({ session: res.data });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    this.props.userSignin('/api/v1/users', {
+          firstName: response.profileObj.givenName,
+          lastName: response.profileObj.familyName,
+          email: response.profileObj.email
+    });
+    this.props.history.push('/dashboard')
   };
 
   signInFailure = error => {
@@ -32,6 +24,10 @@ class SignIn extends Component {
   };
 
   render() {
+    
+    if ("_id" in this.props.user) {
+      return <Redirect to="/dashboard" />
+    }
     return (
       <div className="signin_container">
         <h1>Welcome to Gas Map</h1>
@@ -49,4 +45,22 @@ class SignIn extends Component {
   }
 }
 
-export default SignIn;
+const mapStateToProps = state => {
+  return {
+    user: state.user,
+    hasErrored: state.usersHasErrored,
+    isLoading: state.usersIsLoading
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    userSignin: (url, data) => dispatch(usersSignin(url, data)),
+    getUser: () => dispatch(getUser())
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignIn);
