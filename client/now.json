@@ -3,7 +3,8 @@
   "name": "gas-map",
   "alias": "gas-map.now.sh",
   "routes": [
-    { "src": "/api.*", "dest": "https://gas-map.herokuapp.com" }
+    { "src": "/api.*", "dest": "https://gas-map.herokuapp.com" },
+    { "src": "/dashboard", "dest": "/" }
   ],
   "builds": [
     { "src": "package.json", "use": "@now/static-build", "config": { "distDir": "build" } }

@@ -15,78 +15,68 @@ code {
     monospace;
 }
 
+a:visited {
+  color: unset;
+}
+
 .container {
   margin: 10px;
 }
 
-.signin_container {
+.two_grid_container {
   height: 97vh;
   display: grid;
   align-items: center;
   justify-items: center;
   text-align: center;
   grid-gap: 10px;
-  grid-template-rows: 46% 1fr;
+  grid-template-rows: 40% 1fr;
 }
 
-.signin_container > h1 {
-  grid-area: 'a';
-  text-align: center;
+.two_grid_container.even {
+  grid-template-rows: 50% 1fr;
+}
+
+.two_grid_a {
+  margin-top: 5vh;
+}
+
+.two_grid_b {
+  display: grid;
+  grid-gap: 10px;
+}
+
+.header {
   margin: 0;
   font-size: 3.7em;
   font-weight: 100;
 }
 
+.greeting {
+  word-spacing: 100vw;
+}
+
 .button {
   background-color: rgb(66, 133, 244)!important;
   color: rgb(255, 255, 255)!important;
-  height: 50px;
-  width: 240px;
-  font-size: 16px!important;
+  height: 57px!important;
+  width: 250px!important;
+  font-size: 17px!important;
   box-shadow: rgba(0, 0, 0, 0.25) 0px 2px 4px 0px!important;
   border: none!important;
-  border-radius: 5px;
+  border-radius: 1px!important;
   cursor: pointer;
-  margin: 20px 0;
   justify-content: space-around;
 }
 
-.signin_buttons > button:hover {
+.button:hover {
   box-shadow: rgba(66, 133, 244, 0.3) 0px 0px 3px 3px!important;
 }
 
-.signin_buttons > buttons:focus {
+.button:focus {
   outline: none!important;
 }
 
-.bigger_button {
+.button.lg {
   height: 70px!important;
-  margin: 8px;
-  font-size: 22px!important;
-}
-
-.logout_button {
-  background-color: rgb(244, 66, 66)!important;
-  color: white;
-  font-weight: 500;
-  font-size: .5em;
-  padding: 10px;
-  position: absolute;
-  right: 20px;
-  top: 20px;
-  border-radius: 5px;
-  border: none;
-}
-
-.signin_buttons {
-  display: flex;
-  flex-direction: column;
-}
-
-.signin_buttons > a {
-  margin-top:8px;
-}
-
-.signin_buttons > a:visited {
-  color: unset;
 }

@@ -4,25 +4,31 @@ import { Redirect } from "react-router-dom";
 import { getUser, logoutUser } from "../../actions/users";
 
 class Dashboard extends Component {
-
-  logoutUserClick = (e) => {
+  logoutUserClick = e => {
     e.preventDefault();
     this.props.logoutUser();
-    window.location = "/"
-  }
+    window.location = "/";
+  };
 
   render() {
     if ("_id" in this.props.user) {
       return (
-        <div className="signin_container">
-        <h1>Hello, {this.props.user.firstName}</h1>
-        <div className="signin_buttons">
-          <button className="button bigger_button">My Vehicles</button>
-          <button className="button bigger_button">My Trips</button>
-          <a href="/">Settings</a>
-          <a href="/" onClick={this.logoutUserClick}>Logout</a>
+        <div className="two_grid_container">
+          <div className="two_grid_a">
+            <h1 className="header greeting">
+              Hello, {this.props.user.firstName}
+            </h1>
+          </div>
+
+          <div className="two_grid_b">
+            <button className="button lg">My Vehicles</button>
+            <button className="button lg">My Trips</button>
+            <a href="/">Settings</a>
+            <a href="/" onClick={this.logoutUserClick}>
+              Logout
+            </a>
+          </div>
         </div>
-      </div>
       );
     }
     return <Redirect to="/" />;

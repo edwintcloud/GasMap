@@ -5,34 +5,39 @@ import { connect } from "react-redux";
 import { usersSignin, getUser } from "../actions/users";
 
 class SignIn extends Component {
-
   componentWillMount() {
     this.props.getUser();
   }
 
   signIn = response => {
-    this.props.userSignin('/api/v1/users', {
-          firstName: response.profileObj.givenName,
-          lastName: response.profileObj.familyName,
-          email: response.profileObj.email
+    this.props.userSignin("/api/v1/users", {
+      firstName: response.profileObj.givenName,
+      lastName: response.profileObj.familyName,
+      email: response.profileObj.email
     });
-    this.props.history.push('/dashboard')
+    this.props.history.push("/dashboard");
   };
 
   signInFailure = error => {
     console.log(error);
-    console.log("oh no")
+    console.log("oh no");
   };
 
   render() {
-    
     if ("_id" in this.props.user) {
-      return <Redirect to="/dashboard" />
+      return <Redirect to="/dashboard" />;
     }
 
     return (
-      <div className="signin_container">
-        <h1>Welcome to Gas Map</h1>
+      <div className="two_grid_container even">
+        <div className="two_grid_a">
+          <h1 className="header">
+            Welcome
+            <br /> to <br />
+            Gas Map
+          </h1>
+        </div>
+
         <div className="signin_buttons">
           <GoogleLogin
             clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
