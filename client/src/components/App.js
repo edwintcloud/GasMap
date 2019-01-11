@@ -17,6 +17,10 @@ const routes = [
   {
     path: "/dashboard/vehicles",
     component: Vehicle
+  },
+  {
+    path: "/dashboard/vehicles/add",
+    component: Vehicle
   }
 ];
 

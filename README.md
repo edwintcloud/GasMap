@@ -21,3 +21,4 @@ React PWA with GoLang backend. This app's purpose is to find the most economical
 - Wireframe: [Here](https://docs.google.com/document/d/1YeSE6cU_osruhf7CHbpamtt6iIiCj2Nl9eezKKZxYaM/edit)
 - User Narratives: [Here](https://docs.google.com/document/d/1zTAgrXNFwEfVFGPkSgPuXvTbp4nFH6_5oHCADkD9NEc/edit)
 - ERD: [Here](https://docs.google.com/document/d/1g5PqcSkDw_cGNFT1ZePD6GSw9poX2-ZmQVgwLyp711A/edit)
+- Presentation Slides: [Here](https://docs.google.com/presentation/d/1dzx4RrsT4Db0ewEdqRW5b46ZPHRLH6IMMQISJY0aXp0/edit)

@@ -7,6 +7,10 @@ class Vehicle extends Component {
     this.props.history.push("/dashboard");
   };
 
+  addVehicleClick = () => {
+    this.props.history.push("/dashboard/vehicles/add");
+  };
+
   render() {
     if ("_id" in this.props.user) {
       return (
@@ -30,7 +34,7 @@ class Vehicle extends Component {
               <span className="vehicle_mpg">17</span>
               <span className="vehicle_mte">467</span>
           </div>
-          <button className="button">Add Vehicle</button>
+          <button className="button" onClick={this.addVehicleClick}>Add Vehicle</button>
         </div>
       );
     }

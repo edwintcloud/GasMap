@@ -15,7 +15,7 @@ class SignIn extends Component {
   }
 
   signIn = response => {
-    this.props.userSignin("/api/v1/users", {
+    this.props.userSignin("/api/v1/users/create", {
       firstName: response.profileObj.givenName,
       lastName: response.profileObj.familyName,
       email: response.profileObj.email
