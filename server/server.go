@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -41,10 +42,10 @@ func main() {
 		port = fmt.Sprintf(":%s", os.Getenv("PORT"))
 	}
 
-	// Connect to mongodb or panic
+	// Connect to mongodb or die
 	session, err := utils.ConnectToDb(dbURL, dbName)
 	if err != nil {
-		panic(err)
+		log.Fatalln(err)
 	}
 
 	// defer mongo session to close when app closes

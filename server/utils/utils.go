@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"time"
+
 	"github.com/globalsign/mgo"
 )
 
@@ -16,7 +18,7 @@ var (
 func ConnectToDb(url, name string) (*mgo.Session, error) {
 
 	// connect to mongodb
-	session, err := mgo.Dial(url)
+	session, err := mgo.DialWithTimeout(url, 3*time.Second) // 3 second timeout
 	if err != nil {
 		return session, err
 	}
