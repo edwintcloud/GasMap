@@ -34,7 +34,7 @@ class Vehicle extends Component {
               <span className="vehicle_mpg">17</span>
               <span className="vehicle_mte">467</span>
           </div>
-          <button className="button" onClick={this.addVehicleClick}>Add Vehicle</button>
+          <button className="button" onClick={this.addVehicleClick}>Add A Vehicle</button>
         </div>
       );
     }

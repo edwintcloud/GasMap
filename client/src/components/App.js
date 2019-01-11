@@ -3,6 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 import SignIn from './SignIn';
 import Dashboard from './Dashboard/Dashboard';
 import Vehicle from './Dashboard/Vehicle/Vehicle';
+import AddVehicle from './Dashboard/Vehicle/AddVehicle';
 
 // Routes
 const routes = [
@@ -20,7 +21,7 @@ const routes = [
   },
   {
     path: "/dashboard/vehicles/add",
-    component: Vehicle
+    component: AddVehicle
   }
 ];
 
