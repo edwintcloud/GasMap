@@ -59,6 +59,8 @@ func main() {
 	// Register controller routes with echo
 	userController := controllers.UserController{E: e}
 	userController.Register()
+	vehicleController := controllers.VehicleController{E: e}
+	vehicleController.Register()
 
 	// catch all route
 	e.Any("*", func(c echo.Context) error {

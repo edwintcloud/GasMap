@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"strings"
 	"time"
 
@@ -23,6 +24,11 @@ type User struct {
 
 // Create is our create method for users
 func (u *User) Create() error {
+
+	// check to make sure we have an email
+	if len(u.Email) < 3 {
+		return errors.New("email must be specified")
+	}
 
 	// create user in db
 	err := utils.DB.C("users").Insert(u)
@@ -66,11 +72,40 @@ func (u *User) generateJwt() error {
 
 	// set claims
 	claims := token.Claims.(jwt.MapClaims)
-	claims["id"] = u.ID
+	claims["id"] = u.ID.Hex()
 	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
 
 	// generate encoded token and set Token field
 	u.Token, err = token.SignedString([]byte(utils.JwtSecret))
+	if err != nil {
+		return err
+	}
+
+	// if all went well, return nil
+	return nil
+}
+
+// AddVehicle adds a vehicle to user
+func (u *User) AddVehicle(v *Vehicle) error {
+
+	// append vehicle id to user struct
+	u.Vehicles = append(u.Vehicles, v.ID)
+
+	// update user in db
+	err := utils.DB.C("users").UpdateId(u.ID, u)
+	if err != nil {
+		return err
+	}
+
+	// if all went well, return nil
+	return nil
+}
+
+// FindByID finds a user by id in the db
+func (u *User) FindByID() error {
+
+	// find user by id in db
+	err := utils.DB.C("users").FindId(u.ID).One(&u)
 	if err != nil {
 		return err
 	}

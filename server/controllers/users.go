@@ -4,7 +4,9 @@ import (
 	"net/http"
 
 	"github.com/edwintcloud/GasMap/server/models"
+	"github.com/edwintcloud/GasMap/server/utils"
 	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
 )
 
 // UserController is our user controller struct
@@ -15,10 +17,14 @@ type UserController struct {
 // Register registers our user controller routes
 func (c *UserController) Register() {
 
+	// authorization not needed to create a user
+	c.E.POST("/api/v1/users/create", c.post)
+
 	routes := c.E.Group("/api/v1/users")
+	// jwt middleware for these routes, you must be authorized!
+	routes.Use(middleware.JWT([]byte(utils.JwtSecret)))
 	{
 		routes.GET("", c.get)
-		routes.POST("", c.post)
 	}
 }
 
