@@ -7,6 +7,11 @@ import { usersSignin, getUser } from "../actions/users";
 class SignIn extends Component {
   componentDidMount() {
     this.props.getUser();
+
+    // prompt user to install pwa
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.prompt();
+    });
   }
 
   signIn = response => {

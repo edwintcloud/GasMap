@@ -1,5 +1,5 @@
 # GasMap
-React PWA with GoLang backend. This app's purpose is to find the most economical gas station stops along a road trip.
+React PWA with GoLang backend. This app's purpose is to find the most economical gas station stops along a road trip. Live version of this app can be found [here](https://gas-map.now.sh)
 
 ## Client
 ### Development
