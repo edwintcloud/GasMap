@@ -2,17 +2,17 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { getUser, logoutUser } from "../../actions/users";
+import { GoogleLogout } from "react-google-login";
 
 class Dashboard extends Component {
   logoutUserClick = e => {
-    e.preventDefault();
     this.props.logoutUser();
     window.location = "/";
   };
 
   vehiclesClick = () => {
     this.props.history.push("/dashboard/vehicles");
-  }
+  };
 
   render() {
     if ("_id" in this.props.user) {
@@ -25,12 +25,12 @@ class Dashboard extends Component {
           </div>
 
           <div className="two_grid_b">
-            <button className="button lg" onClick={this.vehiclesClick}>My Vehicles</button>
+            <button className="button lg" onClick={this.vehiclesClick}>
+              My Vehicles
+            </button>
             <button className="button lg">My Trips</button>
+            <GoogleLogout buttonText="Logout" onLogoutSuccess={this.logoutUserClick} className="button" />
             <a href="/">Settings</a>
-            <a href="/" onClick={this.logoutUserClick}>
-              Logout
-            </a>
           </div>
         </div>
       );

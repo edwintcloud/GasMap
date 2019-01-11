@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { usersSignin, getUser } from "../actions/users";
 
 class SignIn extends Component {
-  componentWillMount() {
+  componentDidMount() {
     this.props.getUser();
   }
 
@@ -20,7 +20,6 @@ class SignIn extends Component {
 
   signInFailure = error => {
     console.log(error);
-    console.log("oh no");
   };
 
   render() {
@@ -41,11 +40,12 @@ class SignIn extends Component {
         <div className="signin_buttons">
           <GoogleLogin
             clientId={process.env.REACT_APP_GOOGLE_OAUTH_CLIENT_ID}
-            uxMode="popup"
+            uxMode="redirect"
             buttonText="Sign in With Google"
             onSuccess={this.signIn}
             onFailure={this.signInFailure}
             className="button"
+            isSignedIn={true}
           />
         </div>
       </div>
