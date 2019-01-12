@@ -11,6 +11,22 @@ class Vehicle extends Component {
     this.props.history.push("/dashboard/vehicles/add");
   };
 
+  getMte = (mpg, tankSize) => {
+    if (isNaN(mpg) || isNaN(tankSize)) {
+      return "-"
+    } else {
+      return mpg * tankSize
+    }
+  };
+  
+  getMpg = (mpg) => {
+    if (isNaN(mpg)) {
+      return "-"
+    } else {
+      return mpg
+    }
+  }
+
   render() {
     if ("_id" in this.props.user) {
       return (
@@ -21,20 +37,22 @@ class Vehicle extends Component {
           </div>
 
           <div className="vehicles_grid">
-              <span></span>
-              <span>Name</span>
-              <span>Miles Per Gallon</span>
-              <span>Miles Till Empty</span>
+            <span />
+            <span>Name</span>
+            <span>Miles Per Gallon</span>
+            <span>Miles Till Empty</span>
+            {this.props.user.vehicles.map((vehicle) => (
+              <>
               <object className="vehicle_picture" aria-label="Vehicle Photo" />
-              <span className="vehicle_name">2013 GMC Sierra</span>
-              <span className="vehicle_mpg">17</span>
-              <span className="vehicle_mte">467</span>
-              <object className="vehicle_picture" aria-label="Vehicle Photo" />
-              <span className="vehicle_name">2013 GMC Sierra</span>
-              <span className="vehicle_mpg">17</span>
-              <span className="vehicle_mte">467</span>
+              <span className="vehicle_name">{`${vehicle.year} ${vehicle.make} ${vehicle.model}`}</span>
+              <span className="vehicle_mpg">{this.getMpg(vehicle.mpg)}</span>
+              <span className="vehicle_mte">{this.getMte(vehicle.mpg, vehicle.tankSize)}</span>
+              </>
+            ))}
           </div>
-          <button className="button" onClick={this.addVehicleClick}>Add A Vehicle</button>
+          <button className="button" onClick={this.addVehicleClick}>
+            Add A Vehicle
+          </button>
         </div>
       );
     }

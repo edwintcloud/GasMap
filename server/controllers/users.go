@@ -3,8 +3,10 @@ package controllers
 import (
 	"net/http"
 
+	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/edwintcloud/GasMap/server/models"
 	"github.com/edwintcloud/GasMap/server/utils"
+	"github.com/globalsign/mgo/bson"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
@@ -18,7 +20,7 @@ type UserController struct {
 func (c *UserController) Register() {
 
 	// authorization not needed to create a user
-	c.E.POST("/api/v1/users/create", c.post)
+	c.E.POST("/api/v1/users/create", c.create)
 
 	routes := c.E.Group("/api/v1/users")
 	// jwt middleware for these routes, you must be authorized!
@@ -29,10 +31,38 @@ func (c *UserController) Register() {
 }
 
 func (c *UserController) get(e echo.Context) error {
-	return e.JSON(http.StatusOK, models.ResponseMsg{Message: "Hello"})
+	user := models.User{}
+
+	// get user id from jwt
+	userJWT := e.Get("user").(*jwt.Token)
+	claims := userJWT.Claims.(jwt.MapClaims)
+	id := claims["id"].(string)
+
+	// set user ID
+	user.ID = bson.ObjectIdHex(id)
+
+	// find user by id
+	err := user.FindByID()
+	if err != nil {
+		return e.JSON(http.StatusBadRequest, models.ResponseError{Error: err.Error()})
+	}
+
+	// populate vehicles slice with vehicle information
+	for i, v := range user.Vehicles {
+		vehicle := models.Vehicle{}
+		vehicle.ID = v.(bson.ObjectId)
+		err = vehicle.FindByID()
+		if err != nil {
+			return e.JSON(http.StatusBadRequest, models.ResponseError{Error: err.Error()})
+		}
+		user.Vehicles[i] = vehicle
+	}
+
+	// return user
+	return e.JSON(http.StatusOK, user)
 }
 
-func (c *UserController) post(e echo.Context) error {
+func (c *UserController) create(e echo.Context) error {
 	user := models.User{}
 
 	// bind request data to user struct
@@ -52,6 +82,17 @@ func (c *UserController) post(e echo.Context) error {
 	err = user.FindByEmail()
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, models.ResponseError{Error: err.Error()})
+	}
+
+	// populate vehicles slice with vehicle information
+	for i, v := range user.Vehicles {
+		vehicle := models.Vehicle{}
+		vehicle.ID = v.(bson.ObjectId)
+		err = vehicle.FindByID()
+		if err != nil {
+			return e.JSON(http.StatusBadRequest, models.ResponseError{Error: err.Error()})
+		}
+		user.Vehicles[i] = vehicle
 	}
 
 	// return user

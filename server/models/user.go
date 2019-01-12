@@ -18,7 +18,7 @@ type User struct {
 	Token     string          `json:"token,omitempty" bson:"-"`
 	FirstName string          `json:"firstName" bson:"firstName"`
 	LastName  string          `json:"lastName" bson:"lastName"`
-	Vehicles  []bson.ObjectId `json:"vehicles,omitempty" bson:"vehicles,omitempty"`
+	Vehicles  []interface{}   `json:"vehicles,omitempty" bson:"vehicles,omitempty"`
 	Trips     []bson.ObjectId `json:"trips,omitempty" bson:"trips,omitempty"`
 }
 
@@ -109,6 +109,9 @@ func (u *User) FindByID() error {
 	if err != nil {
 		return err
 	}
+
+	// set password to "" so we don't expose it
+	u.Password = ""
 
 	// if all went well, return nil
 	return nil

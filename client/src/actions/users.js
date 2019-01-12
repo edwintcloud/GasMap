@@ -1,3 +1,5 @@
+import Axios from "axios";
+
 export function usersHasErrored(bool) {
   return {
     type: "USERS_HAS_ERRORED",
@@ -53,10 +55,23 @@ export function usersSignin(url, data) {
 // get user from local storage
 export function getUser() {
   return dispatch => {
+    // get user from local storage
     const curUser = JSON.parse(localStorage.getItem("user"));
-    if (curUser != null) {
-      dispatch(usersFetchDataSuccess(curUser));
+    if (curUser == null) {
+      return;
     }
+
+    // get user with vehicles
+    Axios.get("/api/v1/users", {
+      headers: { Authorization: `Bearer ${curUser.token}` }
+    })
+      .then(res => {
+        localStorage.setItem("user", JSON.stringify(res.data));
+        dispatch(usersFetchDataSuccess(res.data));
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 }
 
@@ -64,5 +79,5 @@ export function getUser() {
 export function logoutUser() {
   return dispatch => {
     localStorage.removeItem("user");
-  }
+  };
 }

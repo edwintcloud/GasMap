@@ -32,3 +32,16 @@ func (v *Vehicle) Create() error {
 	// if all went well, return nil
 	return nil
 }
+
+// FindByID finds a vehicle by ID
+func (v *Vehicle) FindByID() error {
+
+	// find vehicle by id in db
+	err := utils.DB.C("vehicles").FindId(v.ID).One(&v)
+	if err != nil {
+		return err
+	}
+
+	// if all went well, return nil
+	return nil
+}
