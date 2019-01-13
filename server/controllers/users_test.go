@@ -52,7 +52,7 @@ func TestCreateUser(t *testing.T) {
 	// Connect to mongodb or die
 	session, err := utils.ConnectToDb(db.url, db.name)
 	if err != nil {
-		t.Error(err)
+		t.Fatal("Unable to connect to db: ", err)
 	}
 
 	// close db session when test finishes
