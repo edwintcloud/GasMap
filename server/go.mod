@@ -9,6 +9,7 @@ require (
 	github.com/labstack/gommon v0.2.8 // indirect
 	github.com/satori/go.uuid v1.2.0
 	github.com/spf13/viper v1.3.1
+	github.com/stretchr/testify v1.2.2
 	golang.org/x/arch v0.0.0-20181203225421-5a4828bb7045 // indirect
 	golang.org/x/crypto v0.0.0-20190103213133-ff983b9c42bc // indirect
 	golang.org/x/net v0.0.0-20190108155000-395948e2f546 // indirect

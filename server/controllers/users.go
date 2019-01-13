@@ -20,17 +20,17 @@ type UserController struct {
 func (c *UserController) Register() {
 
 	// authorization not needed to create a user
-	c.E.POST("/api/v1/users/create", c.create)
+	c.E.POST("/api/v1/users/create", c.CreateUser)
 
 	routes := c.E.Group("/api/v1/users")
 	// jwt middleware for these routes, you must be authorized!
 	routes.Use(middleware.JWT([]byte(utils.JwtSecret)))
 	{
-		routes.GET("", c.get)
+		routes.GET("", c.getUser)
 	}
 }
 
-func (c *UserController) get(e echo.Context) error {
+func (c *UserController) getUser(e echo.Context) error {
 	user := models.User{}
 
 	// get user id from jwt
@@ -62,7 +62,7 @@ func (c *UserController) get(e echo.Context) error {
 	return e.JSON(http.StatusOK, user)
 }
 
-func (c *UserController) create(e echo.Context) error {
+func (c *UserController) CreateUser(e echo.Context) error {
 	user := models.User{}
 
 	// bind request data to user struct
