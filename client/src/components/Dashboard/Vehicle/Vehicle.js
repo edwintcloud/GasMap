@@ -41,7 +41,7 @@ class Vehicle extends Component {
             <span>Name</span>
             <span>Miles Per Gallon</span>
             <span>Miles Till Empty</span>
-            {this.props.user.vehicles.map((vehicle) => (
+            {this.props.user.hasOwnProperty("vehicles") && this.props.user.vehicles.map((vehicle) => (
               <>
               <object className="vehicle_picture" aria-label="Vehicle Photo" />
               <span className="vehicle_name">{`${vehicle.year} ${vehicle.make} ${vehicle.model}`}</span>
