@@ -116,3 +116,16 @@ func (u *User) FindByID() error {
 	// if all went well, return nil
 	return nil
 }
+
+// RemoveByID removes a user from the db by id
+func (u *User) RemoveByID() error {
+
+	// delete user from db by id
+	err := utils.DB.C("users").RemoveId(u.ID)
+	if err != nil {
+		return err
+	}
+
+	// if all went well, return nil
+	return nil
+}
