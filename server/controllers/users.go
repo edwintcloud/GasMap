@@ -62,6 +62,7 @@ func (c *UserController) getUser(e echo.Context) error {
 	return e.JSON(http.StatusOK, user)
 }
 
+// Creates user if not exists and generates jwt for user and returns the user and jwt
 func (c *UserController) createUser(e echo.Context) error {
 	user := models.User{}
 
