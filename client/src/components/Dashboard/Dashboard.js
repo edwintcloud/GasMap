@@ -14,6 +14,10 @@ class Dashboard extends Component {
     this.props.history.push("/dashboard/vehicles");
   };
 
+  tripsClick = () => {
+    this.props.history.push("/dashboard/trips");
+  };
+
   render() {
     if ("_id" in this.props.user) {
       return (
@@ -28,7 +32,7 @@ class Dashboard extends Component {
             <button className="button lg" onClick={this.vehiclesClick}>
               My Vehicles
             </button>
-            <button className="button lg">My Trips</button>
+            <button className="button lg" onClick={this.tripsClick}>My Trips</button>
             <GoogleLogout buttonText="Logout" onLogoutSuccess={this.logoutUserClick} className="button" />
             <a href="/">Settings</a>
           </div>

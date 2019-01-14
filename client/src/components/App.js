@@ -4,6 +4,8 @@ import SignIn from './SignIn';
 import Dashboard from './Dashboard/Dashboard';
 import Vehicle from './Dashboard/Vehicle/Vehicle';
 import AddVehicle from './Dashboard/Vehicle/AddVehicle';
+import Trip from './Dashboard/Trip/Trip';
+import AddTrip from './Dashboard/Trip/AddTrip';
 
 // Routes
 const routes = [
@@ -22,6 +24,14 @@ const routes = [
   {
     path: "/dashboard/vehicles/add",
     component: AddVehicle
+  },
+  {
+    path: "/dashboard/trips",
+    component: Trip
+  },
+  {
+    path: "/dashboard/trips/add",
+    component: AddTrip
   }
 ];
 
