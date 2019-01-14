@@ -135,6 +135,9 @@ func TestGetUser(t *testing.T) {
 		}
 		return []byte(utils.JwtSecret), nil
 	})
+	if err != nil {
+		t.Fatal("Unable to parse jwt: ", err)
+	}
 
 	// Store user information from token into context.
 	c.Set("user", token)
@@ -159,9 +162,6 @@ func TestGetUser(t *testing.T) {
 	user := models.User{}
 	body, _ := ioutil.ReadAll(rec.Result().Body)
 	json.Unmarshal(body, &user)
-
-	// delete test user when test finishes
-	defer user.RemoveByID()
 
 	// does our user have an first name?
 	ok = assert.NotEmpty(t, user.FirstName, "Expected FirstName to not be Empty")

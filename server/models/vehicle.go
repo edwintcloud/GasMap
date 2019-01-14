@@ -45,3 +45,16 @@ func (v *Vehicle) FindByID() error {
 	// if all went well, return nil
 	return nil
 }
+
+// RemoveByID removes a vehicle in db by id
+func (v *Vehicle) RemoveByID() error {
+
+	// delete vehicle from the db by id
+	err := utils.DB.C("vehicles").RemoveId(v.ID)
+	if err != nil {
+		return err
+	}
+
+	// if all went well, return nil
+	return nil
+}

@@ -25,19 +25,11 @@ func (c *VehicleController) Register() {
 	// jwt middleware for these routes, you must be authorized!
 	routes.Use(middleware.JWT([]byte(utils.JwtSecret)))
 	{
-		routes.GET("", c.get)
-		routes.POST("", c.post)
+		routes.POST("", c.createVehicle)
 	}
 }
 
-func (c *VehicleController) get(e echo.Context) error {
-	user := e.Get("user").(*jwt.Token)
-	claims := user.Claims.(jwt.MapClaims)
-	id := claims["id"].(string)
-	return e.JSON(http.StatusOK, models.ResponseMsg{Message: id})
-}
-
-func (c *VehicleController) post(e echo.Context) error {
+func (c *VehicleController) createVehicle(e echo.Context) error {
 	vehicle := models.Vehicle{}
 	user := models.User{}
 
