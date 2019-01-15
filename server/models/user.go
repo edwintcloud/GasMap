@@ -12,14 +12,14 @@ import (
 
 // User is our user model
 type User struct {
-	ID        bson.ObjectId   `json:"_id,omitempty" bson:"_id,omitempty"`
-	Email     string          `json:"email" bson:"email"`
-	Password  string          `json:"password,omitempty" bson:"password,omitempty"`
-	Token     string          `json:"token,omitempty" bson:"-"`
-	FirstName string          `json:"firstName" bson:"firstName"`
-	LastName  string          `json:"lastName" bson:"lastName"`
-	Vehicles  []interface{}   `json:"vehicles,omitempty" bson:"vehicles,omitempty"`
-	Trips     []bson.ObjectId `json:"trips,omitempty" bson:"trips,omitempty"`
+	ID        bson.ObjectId `json:"_id,omitempty" bson:"_id,omitempty"`
+	Email     string        `json:"email" bson:"email"`
+	Password  string        `json:"password,omitempty" bson:"password,omitempty"`
+	Token     string        `json:"token,omitempty" bson:"-"`
+	FirstName string        `json:"firstName" bson:"firstName"`
+	LastName  string        `json:"lastName" bson:"lastName"`
+	Vehicles  []interface{} `json:"vehicles,omitempty" bson:"vehicles,omitempty"`
+	Trips     []interface{} `json:"trips,omitempty" bson:"trips,omitempty"`
 }
 
 // Create is our create method for users
@@ -90,6 +90,22 @@ func (u *User) AddVehicle(v *Vehicle) error {
 
 	// append vehicle id to user struct
 	u.Vehicles = append(u.Vehicles, v.ID)
+
+	// update user in db
+	err := utils.DB.C("users").UpdateId(u.ID, u)
+	if err != nil {
+		return err
+	}
+
+	// if all went well, return nil
+	return nil
+}
+
+// AddTrip adds a trip to user
+func (u *User) AddTrip(t *Trip) error {
+
+	// apend trip id to user struct
+	u.Trips = append(u.Trips, t.ID)
 
 	// update user in db
 	err := utils.DB.C("users").UpdateId(u.ID, u)
