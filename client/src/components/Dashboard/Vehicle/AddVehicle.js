@@ -17,8 +17,6 @@ class AddVehicle extends Component {
 
   formSubmit = e => {
     e.preventDefault();
-    console.log(this.state)
-    console.log(this.props.user.token)
     Axios
       .post("/api/v1/vehicles", this.state, {
         headers: { 'Authorization': `Bearer ${this.props.user.token}` }

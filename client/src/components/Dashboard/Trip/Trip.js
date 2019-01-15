@@ -14,7 +14,11 @@ class Trip extends Component {
   };
 
   addTripClick = () => {
-    this.props.history.push("/dashboard/trips/add");
+    if (this.props.user.hasOwnProperty('vehicles')) {
+      this.props.history.push("/dashboard/trips/add");
+    } else {
+      alert("You must add a vehicle in My Vehicles first!");
+    }
   };
 
   rowClicked = (e) => {
