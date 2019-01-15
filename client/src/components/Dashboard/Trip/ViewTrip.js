@@ -61,7 +61,7 @@ class ViewTrip extends Component {
             </div>
             <div className="trip_info">
               <span>Distance</span>
-              <span>{this.state.trip.hasOwnProperty("distance") && this.state.trip.distance || `TBD`} miles</span>
+              <span>{this.state.trip.hasOwnProperty("distance") && this.state.trip.distance || `TBD`}</span>
             </div>
             <div className="trip_info">
               <span>Gas Station Stops</span>
