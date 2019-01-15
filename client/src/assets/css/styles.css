@@ -211,3 +211,30 @@ input:focus, select:focus {
 .trip_btn:disabled {
   opacity: 0.8;
 }
+
+/* VIEW TRIP */
+.view_trip_container {
+  display: grid;
+  height: 100%;
+  width: 100%;
+  grid-gap: 5px;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.trip_info {
+  display: grid;
+  grid-gap: 5px;
+}
+
+.trip_info > span:first-of-type {
+  align-self: end;
+  text-decoration: underline;
+}
+
+.delete_btn {
+  background-color: rgb(244, 66, 66)!important;
+}
+
+.delete_btn:hover {
+  box-shadow: rgba(244, 66, 66, 0.3) 0px 0px 3px 3px!important;
+}

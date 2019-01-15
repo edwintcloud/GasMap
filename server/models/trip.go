@@ -16,6 +16,7 @@ type Trip struct {
 	To         string          `json:"to" bson:"to"`
 	Gallons    string          `json:"gallons,omitempty" bson:"gallons,omitempty"`
 	Price      string          `json:"price,omitempty" bson:"price,omitempty"`
+	Distance   string          `json:"distance,omitempty" bson:"distance,omitempty"`
 	Stations   []bson.ObjectId `json:"stations,omitempty" bson:"stations,omitempty"`
 }
 

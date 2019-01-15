@@ -6,6 +6,7 @@ import Vehicle from './Dashboard/Vehicle/Vehicle';
 import AddVehicle from './Dashboard/Vehicle/AddVehicle';
 import Trip from './Dashboard/Trip/Trip';
 import AddTrip from './Dashboard/Trip/AddTrip';
+import ViewTrip from './Dashboard/Trip/ViewTrip';
 
 // Routes
 const routes = [
@@ -32,6 +33,10 @@ const routes = [
   {
     path: "/dashboard/trips/add",
     component: AddTrip
+  },
+  {
+    path: "/dashboard/trips/view/:id",
+    component: ViewTrip
   }
 ];
 

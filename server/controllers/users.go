@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -115,7 +114,6 @@ func (c *UserController) createUser(e echo.Context) error {
 		err = trip.FindByID()
 		if err != nil {
 			return e.JSON(http.StatusBadRequest, models.ResponseError{Error: err.Error()})
-			fmt.Println(err)
 		}
 		user.Trips[i] = trip
 	}

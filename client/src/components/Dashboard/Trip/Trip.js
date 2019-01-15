@@ -4,6 +4,10 @@ import { Redirect } from "react-router-dom";
 
 class Trip extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
   backClick = () => {
     this.props.history.push("/dashboard");
@@ -14,14 +18,22 @@ class Trip extends Component {
   };
 
   rowClicked = (e) => {
-    console.log(e.target.className)
+    const cn = e.target.className;
     document.querySelectorAll(`span`).forEach(el => {
       el.style.color = 'black';
     });
-    document.querySelectorAll(`.${e.target.className}`).forEach(el => {
+    document.querySelectorAll(`.${cn}`).forEach(el => {
       el.style.color = 'blue';
     });
-    document.getElementById('view_trip').disabled = false;
+    const viewButton = document.getElementById('view_trip');
+    viewButton.disabled = false;
+    viewButton.onclick = null;
+    const id = cn.substring(cn.indexOf("-")+1);
+    this.setState({currentId: id});
+    viewButton.addEventListener('click', () => {
+      this.props.history.push(`/dashboard/trips/view/${this.state.currentId}`);
+    });
+    
   }
 
 
