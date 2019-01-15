@@ -9,11 +9,11 @@ import (
 type Trip struct {
 	ID         bson.ObjectId   `json:"_id,omitempty" bson:"_id,omitempty"`
 	Name       string          `json:"name" bson:"name"`
-	VehicleID  bson.ObjectId   `json:"vehicleId,omitempty" bson:"vehicleId,omitempty"`
+	VehicleID  bson.ObjectId   `json:"vehicle,omitempty" bson:"vehicle,omitempty"`
 	CurrentMte string          `json:"currentMte" bson:"currentMte"`
 	Status     string          `json:"status,omitempty" bson:"status,omitempty"`
-	From       Location        `json:"from" bson:"from"`
-	To         Location        `json:"to" bson:"to"`
+	From       string          `json:"from" bson:"from"`
+	To         string          `json:"to" bson:"to"`
 	Gallons    string          `json:"gallons,omitempty" bson:"gallons,omitempty"`
 	Price      string          `json:"price,omitempty" bson:"price,omitempty"`
 	Stations   []bson.ObjectId `json:"stations,omitempty" bson:"stations,omitempty"`
@@ -21,6 +21,9 @@ type Trip struct {
 
 // Create creates a new trip in the db
 func (t *Trip) Create() error {
+
+	// generate new object id for trip
+	t.ID = bson.NewObjectId()
 
 	// create new trip in db
 	err := utils.DB.C("trips").Insert(t)
@@ -36,7 +39,7 @@ func (t *Trip) Create() error {
 func (t *Trip) FindByID() error {
 
 	// find trip in db by id
-	err := utils.DB.C("trips").FindId(t).One(&t)
+	err := utils.DB.C("trips").FindId(t.ID).One(&t)
 	if err != nil {
 		return err
 	}

@@ -40,7 +40,7 @@ func (c *TripController) createTrip(e echo.Context) error {
 	user.ID = bson.ObjectIdHex(id)
 
 	// bind request data to trip struct
-	err := e.Bind(trip)
+	err := e.Bind(&trip)
 	if err != nil {
 		e.JSON(http.StatusBadRequest, models.ResponseError{Error: err.Error()})
 	}
@@ -58,7 +58,7 @@ func (c *TripController) createTrip(e echo.Context) error {
 	}
 
 	// add trip to user in db
-	err = user.AddTrip()
+	err = user.AddTrip(&trip)
 	if err != nil {
 		e.JSON(http.StatusBadRequest, models.ResponseError{Error: err.Error()})
 	}

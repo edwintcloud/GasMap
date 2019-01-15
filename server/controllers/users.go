@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -58,6 +59,17 @@ func (c *UserController) getUser(e echo.Context) error {
 		user.Vehicles[i] = vehicle
 	}
 
+	// populate trips slice with trip information
+	for i, v := range user.Trips {
+		trip := models.Trip{}
+		trip.ID = v.(bson.ObjectId)
+		err = trip.FindByID()
+		if err != nil {
+			return e.JSON(http.StatusBadRequest, models.ResponseError{Error: err.Error()})
+		}
+		user.Trips[i] = trip
+	}
+
 	// return user
 	return e.JSON(http.StatusOK, user)
 }
@@ -94,6 +106,18 @@ func (c *UserController) createUser(e echo.Context) error {
 			return e.JSON(http.StatusBadRequest, models.ResponseError{Error: err.Error()})
 		}
 		user.Vehicles[i] = vehicle
+	}
+
+	// populate trips slice with trip information
+	for i, v := range user.Trips {
+		trip := models.Trip{}
+		trip.ID = v.(bson.ObjectId)
+		err = trip.FindByID()
+		if err != nil {
+			return e.JSON(http.StatusBadRequest, models.ResponseError{Error: err.Error()})
+			fmt.Println(err)
+		}
+		user.Trips[i] = trip
 	}
 
 	// return user

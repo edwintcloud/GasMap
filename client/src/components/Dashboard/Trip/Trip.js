@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 
 class Trip extends Component {
+
+
   backClick = () => {
     this.props.history.push("/dashboard");
   };
@@ -10,6 +12,18 @@ class Trip extends Component {
   addTripClick = () => {
     this.props.history.push("/dashboard/trips/add");
   };
+
+  rowClicked = (e) => {
+    console.log(e.target.className)
+    document.querySelectorAll(`span`).forEach(el => {
+      el.style.color = 'black';
+    });
+    document.querySelectorAll(`.${e.target.className}`).forEach(el => {
+      el.style.color = 'blue';
+    });
+    document.getElementById('view_trip').disabled = false;
+  }
+
 
   render() {
     if ("_id" in this.props.user) {
@@ -21,24 +35,26 @@ class Trip extends Component {
           </div>
 
           <div className="trips_grid">
-            <span>From</span>
+            <span>Name</span>
             <span>To</span>
-            <span></span>
-            <span>1 Main St Brinson, GA 39845</span>
-            <span>244 McAllister St San Francisco, CA 94102</span>
-            <span className="trips_button_container"><button className="button trips_button">View</button><button className="button trips_button">Go</button></span>
-            {/* {this.props.user.hasOwnProperty("vehicles") && this.props.user.vehicles.map((vehicle) => (
+            <span>From</span>
+            {this.props.user.hasOwnProperty("trips") && this.props.user.trips.map((trip) => (
               <>
-              <object className="vehicle_picture" aria-label="Vehicle Photo" />
-              <span className="vehicle_name">{`${vehicle.year} ${vehicle.make} ${vehicle.model}`}</span>
-              <span className="vehicle_mpg">{this.getMpg(vehicle.mpg)}</span>
-              <span className="vehicle_mte">{this.getMte(vehicle.mpg, vehicle.tankSize)}</span>
+              <span className={`trip-${trip._id}`}>{trip.name}</span>
+              <span className={`trip-${trip._id}`} onClick={this.rowClicked}>{trip.from}</span>
+              <span className={`trip-${trip._id}`}>{trip.to}</span>
               </>
-            ))} */}
+            ))}
           </div>
-          <button className="button" onClick={this.addTripClick}>
+          <div className="button_grid">
+          <button id="view_trip" className="button trip_btn" onClick={this.addTripClick} disabled>
+              View
+          </button>
+          <button className="button trip_btn" onClick={this.addTripClick}>
             Add A Trip
           </button>
+          </div>
+          
         </div>
       );
     }

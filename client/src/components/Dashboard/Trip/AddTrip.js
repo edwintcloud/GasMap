@@ -34,15 +34,21 @@ class AddTrip extends Component {
     });
 
     // set current mte to selected vehicle
-    const vehicles = document.querySelectorAll('option');
-    console.log(vehicles)
+    const vehicles = document.querySelectorAll('#vehicle > option');
     if (vehicles.length > 0) {
       const vehicle = this.props.user.vehicles.filter(vehicle => vehicle._id === vehicles[0].value)[0];
       const mte = Number(vehicle.mpg) * Number(vehicle.tankSize);
+      this.setState({vehicle: vehicle._id});
       if (!isNaN(mte)) {
         document.getElementById('currentMte').value = mte;
+        this.setState({currentMte: String(mte)});
       }
     }
+
+    // disable autocomplete on all input elements
+    document.querySelectorAll('input').forEach(el => {
+      el.setAttribute("autocomplete", "off")
+    })
   }
 
   backClick = () => {
@@ -50,15 +56,14 @@ class AddTrip extends Component {
   };
 
   formSubmit = e => {
+    console.log(this.state)
     e.preventDefault();
-    console.log(this.state);
-    console.log(this.props.user.token);
-    Axios.post("/api/v1/trip", this.state, {
+    Axios.post("/api/v1/trips", this.state, {
       headers: { Authorization: `Bearer ${this.props.user.token}` }
     })
       .then(res => {
         this.props.getUser();
-        this.props.history.push("/dashboard/trip");
+        this.props.history.push("/dashboard/trips");
       })
       .catch(err => {
         console.log(err);
@@ -98,6 +103,15 @@ class AddTrip extends Component {
           </div>
 
           <form onSubmit={this.formSubmit} className="add_vehicle_form" autoComplete="off">
+          <div className="form-group">
+              <label htmlFor="name">Name</label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                onChange={this.inputChanged}
+              />
+            </div>
             <div className="form-group">
               <label htmlFor="from">From</label>
               <GooglePlacesAutocomplete id="one" onSelect={this.fromSelected} />
@@ -124,7 +138,7 @@ class AddTrip extends Component {
                 onChange={this.inputChanged}
               />
             </div>
-            <button type="submit" className="button form-submit-btn" disabled>
+            <button type="submit" className="button form-submit-btn">
               Add Trip
             </button>
           </form>
