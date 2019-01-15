@@ -44,3 +44,16 @@ func (t *Trip) FindByID() error {
 	// if all went well, return nil
 	return nil
 }
+
+// RemoveByID removes a trip from the db by id
+func (t *Trip) RemoveByID() error {
+
+	// delete trip from db by id
+	err := utils.DB.C("trips").RemoveId(t.ID)
+	if err != nil {
+		return err
+	}
+
+	// if all went well, return nil
+	return nil
+}
