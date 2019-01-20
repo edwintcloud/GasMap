@@ -7,17 +7,17 @@ import (
 
 // Trip is our trip model
 type Trip struct {
-	ID         bson.ObjectId   `json:"_id,omitempty" bson:"_id,omitempty"`
-	Name       string          `json:"name" bson:"name"`
-	VehicleID  bson.ObjectId   `json:"vehicle,omitempty" bson:"vehicle,omitempty"`
-	CurrentMte string          `json:"currentMte" bson:"currentMte"`
-	Status     string          `json:"status,omitempty" bson:"status,omitempty"`
-	From       string          `json:"from" bson:"from"`
-	To         string          `json:"to" bson:"to"`
-	Gallons    string          `json:"gallons,omitempty" bson:"gallons,omitempty"`
-	Price      string          `json:"price,omitempty" bson:"price,omitempty"`
-	Distance   string          `json:"distance,omitempty" bson:"distance,omitempty"`
-	Stations   []bson.ObjectId `json:"stations,omitempty" bson:"stations,omitempty"`
+	ID         bson.ObjectId `json:"_id,omitempty" bson:"_id,omitempty"`
+	Name       string        `json:"name" bson:"name"`
+	VehicleID  bson.ObjectId `json:"vehicle,omitempty" bson:"vehicle,omitempty"`
+	CurrentMte string        `json:"currentMte" bson:"currentMte"`
+	Status     string        `json:"status,omitempty" bson:"status,omitempty"`
+	From       string        `json:"from" bson:"from"`
+	To         string        `json:"to" bson:"to"`
+	Gallons    string        `json:"gallons,omitempty" bson:"gallons,omitempty"`
+	Price      string        `json:"price,omitempty" bson:"price,omitempty"`
+	Distance   string        `json:"distance,omitempty" bson:"distance,omitempty"`
+	Stations   []interface{} `json:"stations,omitempty" bson:"stations,omitempty"`
 }
 
 // Create creates a new trip in the db

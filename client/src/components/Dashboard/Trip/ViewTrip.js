@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { getUser } from "../../../actions/users";
-import Axios from 'axios';
+import Axios from "axios";
 
 class ViewTrip extends Component {
   constructor(props) {
@@ -49,7 +49,20 @@ class ViewTrip extends Component {
   };
 
   navigateClick = () => {
-    window.alert("Not yet implemented!");
+    this.openMaps();
+  };
+
+  openMaps = () => {
+    // open using app if on iOS, otherwise open with google url
+    if (
+      navigator.platform.indexOf("iPhone") != -1 ||
+      navigator.platform.indexOf("iPad") != -1 ||
+      navigator.platform.indexOf("iPod") != -1
+    ) {
+      window.open("maps://maps.google.com/maps/dir/");
+    } else {
+      window.open("https://maps.google.com/maps/dir/");
+    }
   };
 
   render() {

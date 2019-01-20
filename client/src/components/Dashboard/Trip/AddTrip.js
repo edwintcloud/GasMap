@@ -10,7 +10,9 @@ class AddTrip extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      stations : []
+    };
   }
 
   componentDidMount() {
@@ -79,14 +81,14 @@ class AddTrip extends Component {
         if (status === "OK") {
           distance = res.rows[0].elements[0].distance.text;
           that.setState({ distance: distance }, () => {
-            that.createUser();
+            that.getStations();
           });
         }
       }
     );
   };
 
-  createUser = () => {
+  createTrip = () => {
     Axios.post("/api/v1/trips", this.state, {
       headers: { Authorization: `Bearer ${this.props.user.token}` }
     })
@@ -125,6 +127,80 @@ class AddTrip extends Component {
 
   toSelected = e => {
     this.setState({ to: e.description });
+  };
+
+  getStops = () => {
+    const mte = this.state.currentMte - 50;  
+    const distance = Number(this.state.distance.substring(0, this.state.distance.length-3));
+    return Math.ceil(distance / mte);
+  };
+
+  getStations = () => {
+    const that = this;
+    const stops = this.getStops();
+    const routeBoxer = new window.RouteBoxer();
+    const directionService = new window.google.maps.DirectionsService();
+    const placesService = new window.google.maps.places.PlacesService(
+      window.document.createElement("div")
+    );
+    const request = {
+      origin: this.state.from,
+      destination: this.state.to,
+      travelMode: window.google.maps.DirectionsTravelMode.DRIVING
+    };
+
+    // make directions request to direction api
+    directionService.route(request, function(result, status) {
+      if (status == window.google.maps.DirectionsStatus.OK) {
+        console.log(result);
+
+        const path = result.routes[0].overview_path;
+
+        // box around overview path of the first route, 1 mile (in km) distance
+        const boxes = routeBoxer.box(path, 1.609344);
+        console.log(boxes);
+
+        // find places
+        const interval = Math.ceil(boxes.length / stops);
+        let counter = 0;
+        for (var i = 0; i < boxes.length; i += interval) {
+          placesService.nearbySearch(
+            {
+              bounds: boxes[i],
+              type: "gas_station"
+            },
+            function(results, status) {
+              if (status == window.google.maps.places.PlacesServiceStatus.OK) {
+                let station = results[0];
+                results.forEach(el => {
+                  if (el.rating > station.rating) {
+                    station = el;
+                  }
+                });
+                that.setState(
+                  { stations: [station.vicinity, ...that.state.stations] },
+                  () => {
+                    console.log("added station")
+                    console.log(that.state.stations)
+                  }
+                );
+              }
+            }
+          );
+        }
+        console.log(counter)
+        console.log(stops)
+        // once all the stations are added, then create the trip
+
+        // while (counter < stops * 2) {
+        //   console.log(counter)
+        //   if (counter === stops) {
+        //     that.createUser();
+        //     break;
+        //   }
+        // }
+      }
+    });
   };
 
   render() {
