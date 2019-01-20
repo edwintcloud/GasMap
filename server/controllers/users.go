@@ -69,6 +69,9 @@ func (c *UserController) getUser(e echo.Context) error {
 		user.Trips[i] = trip
 	}
 
+	// set password to "" so we don't expose it
+	user.Password = ""
+
 	// return user
 	return e.JSON(http.StatusOK, user)
 }
@@ -90,7 +93,6 @@ func (c *UserController) createUser(e echo.Context) error {
 	}
 
 	// find user in db by email, also generates jwt for Token field
-	// password is set to ""
 	err = user.FindByEmail()
 	if err != nil {
 		return e.JSON(http.StatusBadRequest, models.ResponseError{Error: err.Error()})
@@ -117,6 +119,9 @@ func (c *UserController) createUser(e echo.Context) error {
 		}
 		user.Trips[i] = trip
 	}
+
+	// set password to "" so we don't expose it
+	user.Password = ""
 
 	// return user
 	return e.JSON(http.StatusOK, user)

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import { getUser } from "../../../actions/users";
+import Axios from 'axios';
 
 class ViewTrip extends Component {
   constructor(props) {
@@ -34,13 +35,22 @@ class ViewTrip extends Component {
 
   deleteClick = () => {
     if (window.confirm("Are you sure you want to delete this trip?")) {
-      console.log("deleted")
+      Axios.delete(`/api/v1/trips?id=${this.state.trip._id}`, {
+        headers: { Authorization: `Bearer ${this.props.user.token}` }
+      })
+        .then(res => {
+          this.props.getUser();
+          this.props.history.push("/dashboard/trips");
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
-  }
+  };
 
   navigateClick = () => {
-    window.alert("Not yet implemented!")
-  }
+    window.alert("Not yet implemented!");
+  };
 
   render() {
     if ("_id" in this.props.user) {
@@ -61,19 +71,35 @@ class ViewTrip extends Component {
             </div>
             <div className="trip_info">
               <span>Distance</span>
-              <span>{this.state.trip.hasOwnProperty("distance") && this.state.trip.distance || `TBD`}</span>
+              <span>
+                {(this.state.trip.hasOwnProperty("distance") &&
+                  this.state.trip.distance) ||
+                  `TBD`}
+              </span>
             </div>
             <div className="trip_info">
               <span>Gas Station Stops</span>
-              <span>{this.state.trip.hasOwnProperty("stations") && this.state.trip.stations.length || `TBD`}</span>
+              <span>
+                {(this.state.trip.hasOwnProperty("stations") &&
+                  this.state.trip.stations.length) ||
+                  `TBD`}
+              </span>
             </div>
             <div className="trip_info">
               <span>Estimated Gallons Used</span>
-              <span>{this.state.trip.hasOwnProperty("gallons") && this.state.trip.gallons || `TBD`}</span>
+              <span>
+                {(this.state.trip.hasOwnProperty("gallons") &&
+                  this.state.trip.gallons) ||
+                  `TBD`}
+              </span>
             </div>
             <div className="trip_info">
               <span>Estimated Gas Cost</span>
-              <span>{this.state.trip.hasOwnProperty("price") && this.state.trip.price || `TBD`}</span>
+              <span>
+                {(this.state.trip.hasOwnProperty("price") &&
+                  this.state.trip.price) ||
+                  `TBD`}
+              </span>
             </div>
           </div>
           <div className="button_grid">

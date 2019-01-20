@@ -56,9 +56,6 @@ func (u *User) FindByEmail() error {
 		return err
 	}
 
-	// set password to "" so we don't expose it
-	u.Password = ""
-
 	// if all went well, return nil
 	return nil
 }
@@ -104,7 +101,7 @@ func (u *User) AddVehicle(v *Vehicle) error {
 // AddTrip adds a trip to user
 func (u *User) AddTrip(t *Trip) error {
 
-	// apend trip id to user struct
+	// append trip id to user struct
 	u.Trips = append(u.Trips, t.ID)
 
 	// update user in db
@@ -126,8 +123,11 @@ func (u *User) FindByID() error {
 		return err
 	}
 
-	// set password to "" so we don't expose it
-	u.Password = ""
+	// generate jwt for u
+	err = u.generateJwt()
+	if err != nil {
+		return err
+	}
 
 	// if all went well, return nil
 	return nil
@@ -138,6 +138,34 @@ func (u *User) RemoveByID() error {
 
 	// delete user from db by id
 	err := utils.DB.C("users").RemoveId(u.ID)
+	if err != nil {
+		return err
+	}
+
+	// if all went well, return nil
+	return nil
+}
+
+// RemoveTrip removes a trip from a user
+func (u *User) RemoveTrip(t *Trip) error {
+	var newTrips []interface{}
+
+	// append elements not matching t to newTrips
+	for _, v := range u.Trips {
+		if v.(bson.ObjectId) != t.ID {
+			newTrips = append(newTrips, v)
+		}
+	}
+
+	// replace current u.Trips with newTrips, if newTrips is not empty
+	if len(newTrips) > 0 {
+		u.Trips = newTrips
+	} else {
+		u.Trips = nil
+	}
+
+	// update user in db
+	err := utils.DB.C("users").UpdateId(u.ID, u)
 	if err != nil {
 		return err
 	}
