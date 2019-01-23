@@ -11,7 +11,6 @@ class AddTrip extends Component {
     super(props);
 
     this.state = {
-      stations : []
     };
   }
 
@@ -84,7 +83,6 @@ class AddTrip extends Component {
   };
 
   createTrip = () => {
-    console.log(this.state)
     Axios.post("/api/v1/trips", this.state, {
       headers: { Authorization: `Bearer ${this.props.user.token}` }
     })
@@ -185,7 +183,7 @@ class AddTrip extends Component {
         destination: destination,
         travelMode: window.google.maps.DirectionsTravelMode.DRIVING
       }, (results, status) => {
-        if(status == window.google.maps.DirectionsStatus.OK) {
+        if(status === window.google.maps.DirectionsStatus.OK) {
           resolve(results);
         } else {
           reject(status);
@@ -203,7 +201,7 @@ class AddTrip extends Component {
         bounds: bounds,
         type: "gas_station"
       }, (results, status) => {
-        if (status == window.google.maps.places.PlacesServiceStatus.OK) {
+        if (status === window.google.maps.places.PlacesServiceStatus.OK) {
           let station = results[0];
           results.forEach(el => {
             if (el.rating > station.rating) {
@@ -219,13 +217,12 @@ class AddTrip extends Component {
   };
 
   findStations = (boxes, interval) => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       let results = [];
       for(var i = 0; i < boxes.length; i += interval) {
-        this.findStation(boxes[i]).then(res => {
+        await this.findStation(boxes[i]).then(res => {
           results.push(res.vicinity);
         }).catch(err => {
-
           reject(err);
         });
       }
