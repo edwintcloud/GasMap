@@ -53,6 +53,7 @@ class ViewTrip extends Component {
   };
 
   openMaps = () => {
+    console.log(this.state.trip)
     // open using app if on iOS, otherwise open with google url
     if (
       navigator.platform.indexOf("iPhone") != -1 ||
@@ -87,31 +88,31 @@ class ViewTrip extends Component {
               <span>
                 {(this.state.trip.hasOwnProperty("distance") &&
                   this.state.trip.distance) ||
-                  `TBD`}
+                  `-`}
               </span>
             </div>
             <div className="trip_info">
               <span>Gas Station Stops</span>
               <span>
-                {(this.state.trip.hasOwnProperty("stations") &&
-                  this.state.trip.stations.length) ||
-                  `TBD`}
+                {(this.state.trip.hasOwnProperty("stops") &&
+                  this.state.trip.stops) ||
+                  `-`}
               </span>
             </div>
             <div className="trip_info">
               <span>Estimated Gallons Used</span>
               <span>
                 {(this.state.trip.hasOwnProperty("gallons") &&
-                  this.state.trip.gallons) ||
-                  `TBD`}
+                  this.state.trip.gallons + " gal") ||
+                  `-`}
               </span>
             </div>
             <div className="trip_info">
               <span>Estimated Gas Cost</span>
               <span>
                 {(this.state.trip.hasOwnProperty("price") &&
-                  this.state.trip.price) ||
-                  `TBD`}
+                  "$" + this.state.trip.price) ||
+                  `-`}
               </span>
             </div>
           </div>

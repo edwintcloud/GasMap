@@ -15,9 +15,10 @@ type Trip struct {
 	From       string        `json:"from" bson:"from"`
 	To         string        `json:"to" bson:"to"`
 	Gallons    string        `json:"gallons,omitempty" bson:"gallons,omitempty"`
+	Stops      string        `json:"stops,omitempty" bson:"stops,omitempty"`
 	Price      string        `json:"price,omitempty" bson:"price,omitempty"`
 	Distance   string        `json:"distance,omitempty" bson:"distance,omitempty"`
-	Stations   []interface{} `json:"stations,omitempty" bson:"stations,omitempty"`
+	Stations   []interface{} `json:"stations" bson:"stations"`
 }
 
 // Create creates a new trip in the db

@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	jwt "github.com/dgrijalva/jwt-go"
@@ -43,24 +44,28 @@ func (c *TripController) createTrip(e echo.Context) error {
 	// bind request data to trip struct
 	err := e.Bind(&trip)
 	if err != nil {
+		fmt.Println(err)
 		return e.JSON(http.StatusBadRequest, models.ResponseError{Error: err.Error()})
 	}
 
 	// create trip in db
 	err = trip.Create()
 	if err != nil {
+		fmt.Println(err)
 		return e.JSON(http.StatusBadRequest, models.ResponseError{Error: err.Error()})
 	}
 
 	// find user by id
 	err = user.FindByID()
 	if err != nil {
+		fmt.Println(err)
 		return e.JSON(http.StatusBadRequest, models.ResponseError{Error: err.Error()})
 	}
 
 	// add trip to user in db
 	err = user.AddTrip(&trip)
 	if err != nil {
+		fmt.Println(err)
 		return e.JSON(http.StatusBadRequest, models.ResponseError{Error: err.Error()})
 	}
 
